@@ -24,16 +24,15 @@ app.get("/", function (req, res) {
 // your first API endpoint... 
 app.get("/api/whoami", function (req, res) {
 
-     let host = req.headers
-     let ipaddress = (host['x-forwarded-for']||req.socket.remoteAddress).split(",")[0];
-     let language = host['accept-language'].split(",")[0];
-     let software = host['user-agent'].split('(')[1].split(')')[0]
+     var host = req.headers
+     var ipaddress = (host['x-forwarded-for']||req.socket.remoteAddress).split(",")[0];
+     var language = host['accept-language'].split(",")[0];
+     var software = host['user-agent'].split('(')[1].split(')')[0]
    
-     let hostResult = {"IP Address":ipaddress,
-	                   "Language":language,
+     var hostResult = {"IP Address":ipaddress,"Language":language,
 	                   "Software":software}
-
-     res.end(JSON.stringify(hostResult))
+// Indent with space add "null,X"
+     res.end(JSON.stringify(hostResult, null,1))
 
 });
 
@@ -41,7 +40,7 @@ app.get("/api/whoami", function (req, res) {
 app.use(function(req, res, next) {
   res.status(404)
     .type('text')
-    .send('Not Found: please type /api/whoami on the tail end of the url.');
+    .send('Not Found\nPlease type \"/api/whoami\" on the tail end of the url.');
 });
 
 
